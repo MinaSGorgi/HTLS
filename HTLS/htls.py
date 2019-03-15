@@ -9,6 +9,8 @@ import skimage
 from skimage import filters
 from skimage import io
 
+import projectionprofile
+
 
 def threshold(gray_image, mode='Otsu'):
     """
@@ -38,7 +40,7 @@ def threshold(gray_image, mode='Otsu'):
     else:
         raise ValueError("Given threshold mode: " + mode + " is not supported.")
 
- 
+
 def segment_image(gray_image, thresh_mode='Otsu'):
     """
     Parameters
@@ -58,8 +60,9 @@ def segment_image(gray_image, thresh_mode='Otsu'):
         When given mode is neither 'Otsu' nor 'Adaptive'.
     """
     binary_image = threshold(gray_image, thresh_mode)
+    projection_profile = projectionprofile.get_projection_profile(binary_image)
 
-    return binary_image
+    return projection_profile
 
 
 if __name__ == "__main__":
